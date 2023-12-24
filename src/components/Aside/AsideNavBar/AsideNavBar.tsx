@@ -1,5 +1,4 @@
 import './AsideNavBar.style.sass';
-// import { NavbarItemElement } from '../../../entities/NavbarItemElement';
 
 export function AsideNavBar({
   item,
