@@ -1,0 +1,30 @@
+.navbar-item
+    height: 32px
+    display: flex
+    gap: 14px
+    align-items: center
+    cursor: pointer
+    padding: 5px 20px
+    margin: 0
+    list-style: none
+
+    &__title
+        font-size: 14px
+        font-family: 'Roboto', sans-serif
+        font-weight: 400
+        font-style: normal
+        font-weight: 400
+        line-height: 16px
+        color: #ffffff
+
+    &::before
+        content: ''
+        background-image: url('../../../assets/icon/navbar.svg')
+        width: 22px
+        height: 22px
+        background-position: center center
+        background-repeat: no-repeat
+        background-size: 22px
+
+    &_active
+        background-color: #A1A1AA

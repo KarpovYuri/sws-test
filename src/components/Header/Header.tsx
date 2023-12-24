@@ -1,6 +1,6 @@
 import { NavBar } from '../NavBar';
 import { IconButton } from '../IconButton';
-import { iconButtonItems, NavBarItems } from './Header.data';
+import { iconButtonItems, navBarItems } from './Header.data';
 import './Header.style.sass';
 
 export function Header() {
@@ -9,7 +9,7 @@ export function Header() {
       {iconButtonItems.map((item, index) => (
         <IconButton key={index} buttonClass={item.buttonClass} />
       ))}
-      <NavBar navBarItems={NavBarItems} />
+      <NavBar navBarItems={navBarItems} />
     </header>
   );
 }

@@ -3,7 +3,7 @@ export const iconButtonItems = [
   { buttonClass: 'back-arrow' }
 ];
 
-export const NavBarItems = [
+export const navBarItems = [
   { title: 'Просмотр', active: true },
   { title: 'Управление', active: false }
 ];
