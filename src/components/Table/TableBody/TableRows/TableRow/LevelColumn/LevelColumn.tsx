@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Key } from 'react';
-import useDeppLevel from '../../../../../../hooks/LevelColumn.hooks';
+import { ErrorMessage } from '../../../../../ErrorMessage';
+import { useDeleteRowMutation } from '../../../../../../redux';
+import useLevelDepth from '../../../../../../hooks/useLevelDepth';
 import './LevelColumn.style.sass';
 
 interface ILevelColumnProps {
@@ -16,7 +18,16 @@ export function LevelColumn({
   child,
   row
 }: ILevelColumnProps) {
-  const [deepLevel, lastDeepLevel] = useDeppLevel({ row, child });
+  const [deleteRow, { isError }] = useDeleteRowMutation();
+  const [levelDepth] = useLevelDepth({ row, child });
+
+  const handleDeleteRow = async (id: number) => {
+    await deleteRow(id).unwrap();
+  };
+
+  if (isError) {
+    return <ErrorMessage />;
+  }
 
   return (
     <div className="level-cell">
@@ -26,15 +37,21 @@ export function LevelColumn({
         }}
         className="level-cell__wrapper"
       >
+        <div className="level-cell__btn-wrp">
+          <button className="level-cell__button level-cell__button_record" />
+          <button
+            className="level-cell__button level-cell__button_trash"
+            onClick={() => handleDeleteRow(row.id)}
+          />
+        </div>
         {parentId && <div className="level-cell__horizontal-line" />}
-        <button className="level-cell__button" />
 
         {child &&
           child.map((_: unknown, index: Key | null | undefined) => (
             <div
               key={index}
               style={{
-                height: `${60 * (deepLevel - lastDeepLevel) - 7}px`
+                height: `${60 * levelDepth - 7}px`
               }}
               className="level-cell__vertical-line"
             />

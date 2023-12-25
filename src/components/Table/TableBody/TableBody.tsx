@@ -1,23 +1,10 @@
-import { useGetRowsQuery } from '../../../redux';
-import { Preloader } from '../../Preloader';
-import { ErrorMessage } from '../../ErrorMessage';
 import { TableRows } from './TableRows';
 import './TableBody.style.sass';
 
-export function TableBody() {
-  const { data = [], isLoading, isError } = useGetRowsQuery('list');
-
-  if (isLoading) {
-    return <Preloader />;
-  }
-
-  if (isError) {
-    return <ErrorMessage />;
-  }
-
+export function TableBody({ rows }: { rows: Record<string, unknown>[] }) {
   return (
     <>
-      <TableRows rows={data} />
+      <TableRows rows={rows} />
     </>
   );
 }

@@ -1,13 +1,23 @@
 .level-cell
     display: flex
     align-items: center
-    padding: 0 34px 0 12px
+    padding: 0 25px 0 12px
     border-top: 1px solid #414144
     box-sizing: border-box
     height: 60px
 
     &__wrapper
         position: relative
+
+    &__btn-wrp
+        display: flex
+        align-items: center
+        padding: 2px
+        border-radius: 6px
+        &:hover
+            background-color: #414144
+        &:hover .level-cell__button_trash
+            visibility: visible
 
     &__button
         position: relative
@@ -20,11 +30,20 @@
         background-color: transparent
         border: none
         background-image: url('../../../../../../assets/icon/record.svg')
+        &_record
+            background-image: url('../../../../../../assets/icon/record.svg')
+        &_trash
+            background-image: url('../../../../../../assets/icon/trash.svg')
+            width: 24px
+            height: 24px
+            background-size: 16px
+            margin-left: 3px
+            visibility: hidden
 
     &__horizontal-line
         position: absolute
-        left: -8px
-        top: 12px
+        left: -6px
+        top: 14px
         height: 1px
         width: 12px
         background-color: #c6c6c6
@@ -32,6 +51,6 @@
     &__vertical-line
         position: absolute
         width: 1px
-        top: 20px
-        left: 11px
+        top: 22px
+        left: 13px
         background-color: #c6c6c6
