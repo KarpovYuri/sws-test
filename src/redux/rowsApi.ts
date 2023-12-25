@@ -17,6 +17,14 @@ export const rowsApi = createApi({
             ]
           : [{ type: 'Rows', id: 'LIST' }]
     }),
+    addRow: build.mutation({
+      query: (body) => ({
+        url: 'create',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Rows', id: 'LIST' }]
+    }),
     deleteRow: build.mutation({
       query: (rId) => ({
         url: `${rId}/delete`,
@@ -27,4 +35,5 @@ export const rowsApi = createApi({
   })
 });
 
-export const { useGetRowsQuery, useDeleteRowMutation } = rowsApi;
+export const { useGetRowsQuery, useDeleteRowMutation, useAddRowMutation } =
+  rowsApi;

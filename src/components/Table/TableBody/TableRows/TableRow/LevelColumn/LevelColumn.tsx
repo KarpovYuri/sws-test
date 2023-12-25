@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Key } from 'react';
 import { ErrorMessage } from '../../../../../ErrorMessage';
-import { useDeleteRowMutation } from '../../../../../../redux';
+import {
+  useDeleteRowMutation,
+  useAddRowMutation
+} from '../../../../../../redux';
 import useLevelDepth from '../../../../../../hooks/useLevelDepth';
+import { ILevelColumnProps } from './LevelColumn.types';
 import './LevelColumn.style.sass';
-
-interface ILevelColumnProps {
-  lineLevel: number;
-  parentId: number | null;
-  row: any;
-  child: any;
-}
 
 export function LevelColumn({
   lineLevel,
@@ -18,8 +15,25 @@ export function LevelColumn({
   child,
   row
 }: ILevelColumnProps) {
-  const [deleteRow, { isError }] = useDeleteRowMutation();
+  const [addRow, { isError }] = useAddRowMutation();
+  const [deleteRow] = useDeleteRowMutation();
   const [levelDepth] = useLevelDepth({ row, child });
+
+  const handleAddRow = async () => {
+    await addRow({
+      equipmentCosts: 0,
+      estimatedProfit: 0,
+      overheads: 0,
+      parentId: row.id,
+      rowName: 'Название',
+      salary: 0,
+      machineOperatorSalary: 0,
+      mainCosts: 0,
+      materials: 0,
+      mimExploitation: 0,
+      supportCosts: 0
+    }).unwrap();
+  };
 
   const handleDeleteRow = async (id: number) => {
     await deleteRow(id).unwrap();
@@ -38,7 +52,10 @@ export function LevelColumn({
         className="level-cell__wrapper"
       >
         <div className="level-cell__btn-wrp">
-          <button className="level-cell__button level-cell__button_record" />
+          <button
+            className="level-cell__button level-cell__button_record"
+            onClick={() => handleAddRow()}
+          />
           <button
             className="level-cell__button level-cell__button_trash"
             onClick={() => handleDeleteRow(row.id)}
