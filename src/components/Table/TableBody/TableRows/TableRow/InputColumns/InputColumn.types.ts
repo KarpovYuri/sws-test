@@ -6,3 +6,13 @@ export interface IInputColumnsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   row: any;
 }
+
+export interface IInput {
+  equipmentCosts: number;
+  estimatedProfit: number;
+  overheads: number;
+  rowName: string;
+  salary: number;
+}
+
+export type TKeysInput = (keyof IInput)[];

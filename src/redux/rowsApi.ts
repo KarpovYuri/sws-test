@@ -31,9 +31,24 @@ export const rowsApi = createApi({
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Rows', id: 'LIST' }]
+    }),
+    updateRow: build.mutation({
+      query(data) {
+        const { rId, ...body } = data;
+        return {
+          url: `${rId}/update`,
+          method: 'POST',
+          body
+        };
+      },
+      invalidatesTags: [{ type: 'Rows', id: 'LIST' }]
     })
   })
 });
 
-export const { useGetRowsQuery, useDeleteRowMutation, useAddRowMutation } =
-  rowsApi;
+export const {
+  useGetRowsQuery,
+  useDeleteRowMutation,
+  useAddRowMutation,
+  useUpdateRowMutation
+} = rowsApi;

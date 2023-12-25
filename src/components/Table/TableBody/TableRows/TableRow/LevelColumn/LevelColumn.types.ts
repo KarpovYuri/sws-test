@@ -4,4 +4,7 @@ export interface ILevelColumnProps {
   parentId: number | null;
   row: any;
   child: any;
+  setEditableRow: React.Dispatch<React.SetStateAction<number>>;
+  setIsEditRow: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditRow: boolean;
 }

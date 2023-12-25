@@ -23,6 +23,9 @@ export function TableRow(props: ITableRowProps) {
         child={props.row.child}
         parentId={props.parentId}
         row={props.row}
+        setEditableRow={props.setEditableRow}
+        setIsEditRow={setIsEditRow}
+        isEditRow={isEditRow}
       />
       <InputColumns
         row={props.row}

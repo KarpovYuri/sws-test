@@ -5,3 +5,5 @@ export interface IInput {
   rowName: string;
   salary: number;
 }
+
+export type TKeysInput = (keyof IInput)[];

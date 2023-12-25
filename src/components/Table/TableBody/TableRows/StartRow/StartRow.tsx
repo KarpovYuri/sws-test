@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { ErrorMessage } from '../../../../ErrorMessage';
 import { useAddRowMutation } from '../../../../../redux';
-import { IInput } from './StartRow.types';
+import { IInput, TKeysInput } from './StartRow.types';
 import './StartRow.style.sass';
 
-type keysInputState = (keyof IInput)[];
-
-const columns: keysInputState = [
+const columns: TKeysInput = [
   'rowName',
   'salary',
   'equipmentCosts',
@@ -24,22 +22,25 @@ export function StartRow() {
     salary: 0
   });
 
+  const newRowData = {
+    equipmentCosts: Number(inputValue.equipmentCosts),
+    estimatedProfit: Number(inputValue.estimatedProfit),
+    overheads: Number(inputValue.overheads),
+    rowName: inputValue.rowName,
+    salary: Number(inputValue.salary),
+    machineOperatorSalary: 0,
+    mainCosts: 0,
+    materials: 0,
+    mimExploitation: 0,
+    supportCosts: 0
+  };
+
   const handleAddRow = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') {
       return;
     }
-    await addRow({
-      equipmentCosts: Number(inputValue.equipmentCosts),
-      estimatedProfit: Number(inputValue.estimatedProfit),
-      overheads: Number(inputValue.overheads),
-      rowName: inputValue.rowName,
-      salary: Number(inputValue.salary),
-      machineOperatorSalary: 0,
-      mainCosts: 0,
-      materials: 0,
-      mimExploitation: 0,
-      supportCosts: 0
-    }).unwrap();
+
+    await addRow(newRowData).unwrap();
   };
 
   if (isError) {

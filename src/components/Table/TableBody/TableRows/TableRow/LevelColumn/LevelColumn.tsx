@@ -13,26 +13,36 @@ export function LevelColumn({
   lineLevel,
   parentId,
   child,
-  row
+  row,
+  setEditableRow,
+  setIsEditRow,
+  isEditRow
 }: ILevelColumnProps) {
   const [addRow, { isError }] = useAddRowMutation();
   const [deleteRow] = useDeleteRowMutation();
   const [levelDepth] = useLevelDepth({ row, child });
 
+  const newRowData = {
+    equipmentCosts: 0,
+    estimatedProfit: 0,
+    overheads: 0,
+    parentId: row.id,
+    rowName: 'Название',
+    salary: 0,
+    machineOperatorSalary: 0,
+    mainCosts: 0,
+    materials: 0,
+    mimExploitation: 0,
+    supportCosts: 0
+  };
+
   const handleAddRow = async () => {
-    await addRow({
-      equipmentCosts: 0,
-      estimatedProfit: 0,
-      overheads: 0,
-      parentId: row.id,
-      rowName: 'Название',
-      salary: 0,
-      machineOperatorSalary: 0,
-      mainCosts: 0,
-      materials: 0,
-      mimExploitation: 0,
-      supportCosts: 0
-    }).unwrap();
+    if (isEditRow) {
+      return;
+    }
+    const result = await addRow(newRowData).unwrap();
+    setEditableRow(result.current.id);
+    setIsEditRow(true);
   };
 
   const handleDeleteRow = async (id: number) => {

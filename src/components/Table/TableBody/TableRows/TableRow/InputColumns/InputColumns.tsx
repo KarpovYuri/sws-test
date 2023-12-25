@@ -1,7 +1,10 @@
+import { useState } from 'react';
+import { useUpdateRowMutation } from '../../../../../../redux';
+import { ErrorMessage } from '../../../../../ErrorMessage';
 import './InputColumns.style.sass';
-import { IInputColumnsProps } from './InputColumn.types';
+import { IInputColumnsProps, IInput, TKeysInput } from './InputColumn.types';
 
-const columns = [
+const columns: TKeysInput = [
   'rowName',
   'salary',
   'equipmentCosts',
@@ -9,7 +12,6 @@ const columns = [
   'estimatedProfit'
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function InputColumns({
   row,
   setEditableRow,
@@ -17,6 +19,43 @@ export function InputColumns({
   isEditRow,
   editableRow
 }: IInputColumnsProps) {
+  const [updateRow, { isError }] = useUpdateRowMutation();
+  const [inputValue, setInputValue] = useState<IInput>({
+    rowName: row.rowName,
+    salary: row.salary,
+    equipmentCosts: row.equipmentCosts,
+    overheads: row.overheads,
+    estimatedProfit: row.estimatedProfit
+  });
+
+  const rowData = {
+    equipmentCosts: Number(inputValue.equipmentCosts),
+    estimatedProfit: Number(inputValue.estimatedProfit),
+    machineOperatorSalary: 0,
+    mainCosts: 0,
+    materials: 0,
+    overheads: Number(inputValue.overheads),
+    rowName: inputValue.rowName,
+    salary: Number(inputValue.salary),
+    mimExploitation: 0,
+    supportCosts: 0,
+    rId: row.id
+  };
+
+  const handleUpdateRow = async (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key !== 'Enter') {
+      return;
+    }
+    await updateRow(rowData).unwrap();
+    setIsEditRow(false);
+  };
+
+  if (isError) {
+    return <ErrorMessage />;
+  }
+
   return (
     <>
       {columns.map((key) => {
@@ -35,8 +74,12 @@ export function InputColumns({
               type="text"
               className="input"
               name={key}
-              value={row[key]}
+              value={inputValue[key]}
               disabled={!isEditRow}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setInputValue({ ...inputValue, [key]: event.target.value });
+              }}
+              onKeyDown={handleUpdateRow}
             />
           </div>
         );
