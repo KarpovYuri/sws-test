@@ -1,4 +1,4 @@
-import './Table.style.sass';
+import './TableHeader.style.sass';
 
 export function TableHeader({
   tableHeaderItems
